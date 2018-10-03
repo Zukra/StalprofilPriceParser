@@ -1,6 +1,6 @@
 <?php
 
-require 'vendor/autoload.php';
+//require 'vendor/autoload.php';
 
 error_reporting(E_ALL & ~E_NOTICE);
 
@@ -455,6 +455,10 @@ function getPriceUnequalAngles($product) {
  */
 function getPriceHollowSections($product) {
     global $prices;
+
+//    file_put_contents('log.log', var_export($product, true), FILE_APPEND);
+//    file_put_contents('log.log', var_export($prices['HOLLOW SECTIONS'], true), FILE_APPEND);
+
     if (strpos($product->comment, '10219') !== false) {
         $wg = 'EN10219';
     } else if (strpos($product->comment, '10210') !== false) {
@@ -1874,6 +1878,15 @@ function parsePrices($priceFileName, $cfg) {
             } else {
                 $to = 1000;
             }
+
+            preg_match('/(over (\d+))/', $a, $matches);
+            // правая граница
+            if ($matches[2]) {
+//                    file_put_contents('log.log', var_export($matches, true) . "\n", FILE_APPEND);
+//                    file_put_contents('log.log', var_export($to, true) . "\n", FILE_APPEND);
+                $from = $matches[2] + 1;
+            }
+
             // массив ширин
             $widthes = range($from, $to + 1);
 
