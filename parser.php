@@ -2,6 +2,8 @@
 
 //require 'vendor/autoload.php';
 
+//file_put_contents('log.log', var_export($matches, true) . "\n", FILE_APPEND);
+
 error_reporting(E_ALL & ~E_NOTICE);
 
 session_start();
@@ -22,6 +24,14 @@ global $prices;
  */
 $parserConfiguration = (object)array(
     'namesMap' => (object)array( // карта соответствий наименований
+                                 'BLACHA OCYNKOWANA'                 => (object)array(
+                                     'ru' => 'Лист оцинкованный',
+                                     'en' => 'HDG sheet',
+                                 ),
+                                 'BLACHA OCYNKOWANA W KRĘGACH'       => (object)array(
+                                     'ru' => 'Рулон оцинкованный',
+                                     'en' => 'HDG coil',
+                                 ),
                                  'BLACHA G/W'                        => (object)array(
                                      'ru' => 'Лист г/к',
                                      'en' => 'Hot rolled steel plate',
@@ -44,7 +54,7 @@ $parserConfiguration = (object)array(
                                  ),
                                  'CEOWNIK PÓŁZAMKNIĘTY'              => (object)array(
                                      'ru' => 'Коробчатый профиль',
-                                     'en' => 'Cold-formed lipped C-section',
+                                     'en' => 'Semi-hollow channel section',
                                  ),
                                  'CEOWNIK Z/G'                       => (object)array(
                                      'ru' => 'Швеллер гнутый',
@@ -329,6 +339,38 @@ function getPriceLowTBars($product) {
  * object    product        объект товара
  *
  * return    float            цена (0, если не найдена)
+ * @param $product
+ * @return int
+ */
+function getPriceColdFormedChannels($product) {
+    global $prices;
+    $x = "{$product->size}x{$product->steel}";
+    if (isset($prices['COLD FORMED CHANNELS'][$x])) {
+        return $prices['COLD FORMED CHANNELS'][$x];
+    } else {
+        return 0;
+    }
+}
+
+function getPriceGateProfiles($product) {
+    global $prices;
+    $x = "{$product->size}x{$product->steel}";
+    if (isset($prices['GATE PROFILES'][$x])) {
+        return $prices['GATE PROFILES'][$x];
+    } else {
+        return 0;
+    }
+}
+
+/**
+ * функция для получения цены товара
+ *
+ * принимает на вход объект товара
+ * находит по данным товара нужную цену и отдает ее
+ *
+ * object    product        объект товара
+ *
+ * return    float            цена (0, если не найдена)
  */
 function getPriceTBars($product) {
     global $prices;
@@ -443,6 +485,28 @@ function getPriceUnequalAngles($product) {
     }
 }
 
+function getPriceOcfpUnequalAngles($product) {
+    global $prices;
+
+    $x = "{$product->width}X{$product->height}X{$product->thickness}x{$product->steel}";
+    if (isset($prices['OCFP UNEQUAL ANGLES'][$x])) {
+        return $prices['OCFP UNEQUAL ANGLES'][$x];
+    } else {
+        return 0;
+    }
+}
+
+function getPriceOcfpEqualAngles($product) {
+    global $prices;
+
+    $x = "{$product->width}X{$product->height}X{$product->thickness}x{$product->steel}";
+    if (isset($prices['OCFP EQUAL ANGLES'][$x])) {
+        return $prices['OCFP EQUAL ANGLES'][$x];
+    } else {
+        return 0;
+    }
+}
+
 /**
  * функция для получения цены товара
  *
@@ -455,9 +519,6 @@ function getPriceUnequalAngles($product) {
  */
 function getPriceHollowSections($product) {
     global $prices;
-
-//    file_put_contents('log.log', var_export($product, true), FILE_APPEND);
-//    file_put_contents('log.log', var_export($prices['HOLLOW SECTIONS'], true), FILE_APPEND);
 
     if (strpos($product->comment, '10219') !== false) {
         $wg = 'EN10219';
@@ -628,7 +689,7 @@ function getPricePipes($product) {
  * return    float            цена (-1 если спецфункция не найдена)
  */
 function getPrice($name, $product) {
-    $name = str_replace(array(' ', '-'), '', $name);
+    $name = str_replace([' ', '-'], '', $name);
     $fn = 'getPrice' . $name;
     if (function_exists($fn)) {
         return (float)$fn($product);
@@ -686,6 +747,35 @@ function parseRow($rowData, $cfg) {
         $item->length = parseLength($matches[4]);
         parseAdditional($matches[5], $item);
         $item->price = getPrice('TEARDROP PLATES', $item);
+    } else if (strpos($rowData[0], 'BLACHA OCYNKOWANA W KRĘGACH') !== false) {
+        $item->namePL = 'BLACHA OCYNKOWANA W KRĘGACH';
+        $item->nameRU = getName('BLACHA OCYNKOWANA W KRĘGACH', 'ru', $cfg->namesMap);
+        $item->nameEN = getName('BLACHA OCYNKOWANA W KRĘGACH', 'en', $cfg->namesMap);
+        preg_match('/(BLACHA OCYNKOWANA W KRĘGACH)(.*?)mm(.*?)mm(.*)/', $x, $matches);
+        $item->thickness = (float)trim(str_replace(',', '.', $matches[2]));
+        $item->width = (int)trim(str_replace(' ', '', $matches[3]));
+        parseAdditional($matches[4], $item);
+        $processingPos = strpos($item->steel, '-');
+        if ($processingPos !== false) {
+            $item->processing = substr($item->steel, $processingPos + 1);
+            $item->steel = substr($item->steel, 0, $processingPos);
+        }
+        $item->price = 0; //getPrice('HDG COIL', $item);
+    } else if (strpos($rowData[0], 'BLACHA OCYNKOWANA') !== false) {
+        $item->namePL = 'BLACHA OCYNKOWANA';
+        $item->nameRU = getName('BLACHA OCYNKOWANA', 'ru', $cfg->namesMap);
+        $item->nameEN = getName('BLACHA OCYNKOWANA', 'en', $cfg->namesMap);
+        preg_match('/(BLACHA OCYNKOWANA)(.*?)mm(.*?)mm(.*?)mm(.*)/', $x, $matches);
+        $item->thickness = (float)trim(str_replace(',', '.', $matches[2]));
+        $item->width = (int)trim(str_replace(' ', '', $matches[3]));
+        $item->length = parseLength($matches[4]);
+        parseAdditional($matches[5], $item);
+        $processingPos = strpos($item->steel, '-');
+        if ($processingPos !== false) {
+            $item->processing = substr($item->steel, $processingPos + 1);
+            $item->steel = substr($item->steel, 0, $processingPos);
+        }
+        $item->price = 0; //getPrice('HDG SHEET', $item);
     } else if (strpos($rowData[0], 'BLACHA KOTŁOWA') !== false) {
         $item->namePL = 'BLACHA KOTŁOWA';
         $item->nameRU = getName('BLACHA KOTŁOWA', 'ru', $cfg->namesMap);
@@ -726,7 +816,7 @@ function parseRow($rowData, $cfg) {
         $item->size = trim($matches[2]);
         $item->length = parseLength($matches[3]);
         parseAdditional($matches[4], $item);
-        $item->price = 0; // todo get price
+        $item->price = getPrice('GATE PROFILES', $item);
     } else if (strpos($rowData[0], 'CEOWNIK Z/G') !== false) {
         $item->namePL = 'CEOWNIK Z/G';
         $item->nameRU = getName('CEOWNIK Z/G', 'ru', $cfg->namesMap);
@@ -740,7 +830,7 @@ function parseRow($rowData, $cfg) {
             $item->thickness = (float)str_replace(',', '.', $item->thickness);
         }
         parseAdditional($matches[5], $item);
-        $item->price = ($item->type == 'Z/G') ? 0 : getPrice('PROFIL', $item);
+        $item->price = ($item->type == 'Z/G') ? getPrice('COLD FORMED CHANNELS', $item) : getPrice('PROFIL', $item);
     } else if (strpos($rowData[0], 'CEOWNIK') !== false) {
         $item->namePL = 'CEOWNIK';
         $item->nameRU = getName('CEOWNIK', 'ru', $cfg->namesMap);
@@ -797,7 +887,9 @@ function parseRow($rowData, $cfg) {
         list($item->width, $item->height, $item->thickness) = explode('X', $item->size);
         $item->thickness = (float)str_replace(',', '.', $item->thickness);
         parseAdditional($matches[5], $item);
-        $item->price = ($item->type == 'Z/G') ? 0 : getPrice($item->width == $item->height ? 'EQUAL ANGLES' : 'UNEQUAL ANGLES', $item);
+        $item->price = ($item->type == 'Z/G')
+            ? getPrice($item->width == $item->height ? 'OCFP EQUAL ANGLES' : 'OCFP UNEQUAL ANGLES', $item)
+            : getPrice($item->width == $item->height ? 'EQUAL ANGLES' : 'UNEQUAL ANGLES', $item);
     } else if (strpos($rowData[0], 'KĄTOWNIK') !== false) {
         $item->namePL = 'KĄTOWNIK';
         $item->nameRU = getName('KĄTOWNIK', 'ru', $cfg->namesMap);
@@ -816,7 +908,9 @@ function parseRow($rowData, $cfg) {
             $item->name1C = str_replace('.', ',', "Уголок неравнополочный {$item->width}х{$item->height}х{$item->thickness} EN 10056");
             $item->nom = "EN 10056: уголки неравнополочные (неравнобедренные)";
         }
-        $item->price = ($item->type == 'Z/G') ? 0 : getPrice($item->width == $item->height ? 'EQUAL ANGLES' : 'UNEQUAL ANGLES', $item);
+        $item->price = ($item->type == 'Z/G')
+            ? getPrice($item->width == $item->height ? 'OCFP EQUAL ANGLES' : 'OCFP UNEQUAL ANGLES', $item)
+            : getPrice($item->width == $item->height ? 'EQUAL ANGLES' : 'UNEQUAL ANGLES', $item);
     } else if (strpos($rowData[0], 'KSZTAŁTOWNIK KWADRATOWY') !== false) {
         $item->namePL = 'KSZTAŁTOWNIK KWADRATOWY';
         $item->nameRU = getName('KSZTAŁTOWNIK KWADRATOWY', 'ru', $cfg->namesMap);
@@ -831,7 +925,7 @@ function parseRow($rowData, $cfg) {
         if ($item->steel == 'E235') {
             $item->name1C = str_replace('.', ',', "Труба квадратная сварная {$item->width}х{$item->height}х{$item->thickness} EN 10305-5");
             $item->nom = "EN 10305-5: трубы квадратные прецизионные сварные холоднокалиброванные";
-        } else if ($item->steel == 'S355J2H' || $item->steel == 'S355J2H/S420MH' || $item->steel == 'S235JRH') {
+        } else if ($item->steel == 'S355J2H' || $item->steel == 'S355J2H/S420MH' || $item->steel == 'S235JRH' || $item->steel == 'S235JR') {
             if ($item->type) {
                 $item->name1C = str_replace('.', ',', "Труба квадратная бесшовная {$item->width}х{$item->height}х{$item->thickness} EN 10210");
                 $item->nom = "EN 10210: трубы квадратные бесшовные горячекатаные";
@@ -855,7 +949,7 @@ function parseRow($rowData, $cfg) {
         if ($item->steel == 'E235') {
             $item->name1C = str_replace('.', ',', "Труба прямоугольная сварная {$item->width}х{$item->height}х{$item->thickness} EN 10305-5");
             $item->nom = "EN 10305-5: трубы прямоугольные прецизионные сварные холоднокалиброванные";
-        } else if ($item->steel == 'S355J2H' || $item->steel == 'S235JRH') {
+        } else if ($item->steel == 'S355J2H' || $item->steel == 'S235JRH' || $item->steel == 'S355J2H/S420MH') {
             if ($item->type) {
                 $item->name1C = str_replace('.', ',', "Труба прямоугольная бесшовная {$item->width}х{$item->height}х{$item->thickness} EN 10210");
                 $item->nom = "EN 10210: трубы прямоугольные бесшовные горячекатаные";
@@ -1654,6 +1748,284 @@ function parsePrices($priceFileName, $cfg) {
         // ********************************************************************
 
         // ********************************************************************
+        // start OCFP
+        // ********************************************************************
+
+        // устанавливаем рабочий лист
+        $sheet = $objPHPExcel->getSheetByName('OCFP');
+        // определяем самую нижнюю заполненную строку
+        $highestRow = $sheet->getHighestRow();
+        // определяем самую крайнюю заполненную колонку
+        $highestColumn = $sheet->getHighestColumn();
+
+        // ***************
+        // start COLD FORMED CHANELS
+        // ***************
+        $x = [];
+        // флаг, который определяет начало данных
+        $startData = false;
+        // цикл разбора, от стартовой строки до нижней
+        for ($row = 0; $row <= $highestRow; $row++) {
+            // получаем массив данных строки
+            $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, null, true, false);
+            $rowData = $rowData[0];
+
+            // если очередная строка является заголовком категории цен
+            if (strtoupper(trim($rowData[1])) == 'COLD FORMED CHANELS') {
+                // ставим флаг в true
+                $startData = true;
+                // переходим к следующей итерации, где уже непосредственно будет работа с данными
+                continue;
+            }
+            if ($startData && !trim($rowData[1])) { // цены по этой категории закончились
+                break;
+            }
+            // если данные еще не начались либо попалась пустая строка
+            if (!$startData || !trim($rowData[1])) {
+                // переходим к следующей итерации
+                continue;
+            }
+            // размеры
+            // заменяем запятые на точку с запятой
+            // избавляемся от пробелов, приводим к верхнему регистру
+            $sizes = strtoupper(str_replace([' ', ','], ['', ';'], $rowData[1]));
+            // разбиваем в массив
+            $sizes = explode(';', $sizes);
+            // пост-обход массива
+            foreach ($sizes as $k => $s) {
+                // в ячейке есть дефис, нужно разобрать диапазон
+                if (strpos($s, '-') !== false) {
+                    // разбиваем строку на две части
+                    $a = substr($s, 0, strrpos($s, 'X'));
+                    $b = substr($s, strrpos($s, 'X') + 1, strlen($s) - strrpos($s, 'X'));
+                    // во второй части диапазон, получаем его
+                    list($p, $q) = explode('-', $b);
+                    // добавляем в массив размеры по диапазону
+                    for ($i = $p; $i <= $q; $i++) {
+                        $sizes[] = $a . 'X' . $i;
+                    }
+                    // удаляем ненужный элемент
+                    unset($sizes[$k]);
+                }
+                // в ячейке есть амперсанд, нужно сделать из одного размера два
+                if (strpos($s, '&') !== false) {
+                    // разбиваем строку на две части
+                    list($a, $b) = explode('&', $s);
+                    // левая часть - самодостаточный размер
+                    $sizes[] = $a;
+                    // другой получаем из части левого без последнего фрагмента + правая часть
+                    $sizes[] = substr($a, 0, strrpos($a, 'X') + 1) . $b;
+                    // удаляем ненужный элемент
+                    unset($sizes[$k]);
+                }
+            }
+
+            // цена за сталь S235JR
+            $steel1 = trim($rowData[2]);
+
+            // создаем специальный хеш для хранения цен
+            foreach ($sizes as $s) {
+                $x["{$s}xS235JR"] = $steel1;
+            }
+        }
+        $data['COLD FORMED CHANNELS'] = $x;
+
+        // ***************
+        // end COLD FORMED CHANELS
+        // ***************
+
+        // ***************
+        // start GATE PROFILES
+        // ***************
+        $x = [];
+        // флаг, который определяет начало данных
+        $startData = false;
+        // цикл разбора, от стартовой строки до нижней
+        for ($row = 0; $row <= $highestRow; $row++) {
+            // получаем массив данных строки
+            $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, null, true, false);
+            $rowData = $rowData[0];
+
+            // если очередная строка является заголовком категории цен
+            if (strtoupper(trim($rowData[1])) == 'GATE PROFILES') {
+                // ставим флаг в true
+                $startData = true;
+                // переходим к следующей итерации, где уже непосредственно будет работа с данными
+                continue;
+            }
+            if ($startData && !trim($rowData[1])) { // цены по этой категории закончились
+                break;
+            }
+            // если данные еще не начались либо попалась пустая строка
+            if (!$startData || !trim($rowData[1])) {
+                // переходим к следующей итерации
+                continue;
+            }
+            // размеры
+            // заменяем запятые на точку с запятой
+            // избавляемся от пробелов, приводим к верхнему регистру
+            $sizes = strtoupper(str_replace([' ', ','], ['', '.'], $rowData[1]));
+
+            $parts = explode('X', $sizes);
+            array_walk($parts, function (&$item) {
+                $item = 1 * $item;
+            });
+            $sizes = implode('X', $parts);
+            $sizes = strtoupper(str_replace('.', ',', $sizes));
+
+            // цена за сталь S235JR
+            $steel1 = trim($rowData[2]);
+
+            // создаем специальный хеш для хранения цен
+            $x["{$sizes}xS235JR"] = $steel1;
+        }
+        $data['GATE PROFILES'] = $x;
+
+        // ***************
+        // end GATE PROFILES
+        // ***************
+
+        // ***************
+        // start OCFP UNEQUAL ANGLES
+        // ***************
+        $x = [];
+        // флаг, который определяет начало данных
+        $startData = false;
+        // цикл разбора, от стартовой строки до нижней
+        for ($row = 0; $row <= $highestRow; $row++) {
+            // получаем массив данных строки
+            $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, null, true, false);
+            $rowData = $rowData[0];
+
+            // если очередная строка является заголовком категории цен
+            if (strtoupper(trim($rowData[1])) == 'UNEQUAL COLD FORMED ANGLES') {
+                // ставим флаг в true
+                $startData = true;
+                // переходим к следующей итерации, где уже непосредственно будет работа с данными
+                continue;
+            }
+
+            if ($startData && !trim($rowData[1])) { // цены по этой категории закончились
+                break;
+            }
+
+            // если данные еще не начались либо попалась пустая строка
+            if (!$startData || !trim($rowData[1])) {
+                // переходим к следующей итерации
+                continue;
+            }
+
+            // размеры
+            // избавляемся от пробелов, приводим к верхнему регистру
+            $sizes = [];
+            $str = strtoupper(str_replace([' ', 'z/g'], ['', ''], $rowData[1]));
+            preg_match('/(\S+)TO(\S+)X((\d+)-(\d+))/', $str, $matches);
+            if (!empty($matches)) {
+                $sizeFrom = explode('X', $matches[1]);
+                $sizeTo = explode('X', $matches[2]);
+                $thicknessFrom = (int)$matches[4];
+                $thicknessTo = (int)$matches[5];
+
+                $widths = range($sizeFrom[0], $sizeTo[0]);
+                $heights = range($sizeFrom[1], $sizeTo[1]);
+                $thicknesses = range($thicknessFrom, $thicknessTo);
+                foreach ($thicknesses as $thickness) {
+                    foreach ($widths as $width) {
+                        foreach ($heights as $height) {
+                            $sizes[] = $width . 'X' . $height . 'X' . $thickness;
+                        }
+                    }
+                }
+            } else {
+                $sizes[] = $str;
+            }
+            // цена за сталь S235JR
+            $steel1 = trim($rowData[2]);
+
+            // создаем специальный хеш для хранения цен
+            foreach ($sizes as $s) {
+                $x["{$s}xS235JR"] = $steel1;
+            }
+        }
+        $data['OCFP UNEQUAL ANGLES'] = $x;
+
+        // ***************
+        // end OCFP UNEQUAL ANGLES
+        // ***************
+
+        // ***************
+        // start OCFP EQUAL ANGLES
+        // ***************
+        $x = [];
+        // флаг, который определяет начало данных
+        $startData = false;
+        // цикл разбора, от стартовой строки до нижней
+        for ($row = 0; $row <= $highestRow; $row++) {
+            // получаем массив данных строки
+            $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, null, true, false);
+            $rowData = $rowData[0];
+
+            // если очередная строка является заголовком категории цен
+            if (strtoupper(trim($rowData[1])) == 'COLD FORMED ANGLES') {
+                // ставим флаг в true
+                $startData = true;
+                // переходим к следующей итерации, где уже непосредственно будет работа с данными
+                continue;
+            }
+
+            if ($startData && !trim($rowData[1])) { // цены по этой категории закончились
+                break;
+            }
+
+            // если данные еще не начались либо попалась пустая строка
+            if (!$startData || !trim($rowData[1])) {
+                // переходим к следующей итерации
+                continue;
+            }
+
+            // размеры
+            // избавляемся от пробелов, приводим к верхнему регистру
+            $sizes = [];
+            $str = strtoupper(str_replace([' ', 'z/g'], ['', ''], $rowData[1]));
+            preg_match('/(\S+)TO(\S+)X((\d+)-(\d+))/', $str, $matches);
+            if (!empty($matches)) {
+                $sizeFrom = explode('X', $matches[1]);
+                $sizeTo = explode('X', $matches[2]);
+                $thicknessFrom = (int)$matches[4];
+                $thicknessTo = (int)$matches[5];
+
+                $widths = range($sizeFrom[0], $sizeTo[0]);
+                $heights = range($sizeFrom[1], $sizeTo[1]);
+                $thicknesses = range($thicknessFrom, $thicknessTo);
+                foreach ($thicknesses as $thickness) {
+                    foreach ($widths as $width) {
+                        foreach ($heights as $height) {
+                            $sizes[] = $width . 'X' . $height . 'X' . $thickness;
+                        }
+                    }
+                }
+            } else {
+                $sizes[] = $str;
+            }
+            // цена за сталь S235JR
+            $steel1 = trim($rowData[2]);
+
+            // создаем специальный хеш для хранения цен
+            foreach ($sizes as $s) {
+                $x["{$s}xS235JR"] = $steel1;
+            }
+        }
+        $data['OCFP EQUAL ANGLES'] = $x;
+
+        // ***************
+        // end OCFP UNEQUAL ANGLES
+        // ***************
+
+        // ********************************************************************
+        // end OCFP
+        // ********************************************************************
+
+        // ********************************************************************
         // start PRICES
         // ********************************************************************
 
@@ -1882,13 +2254,11 @@ function parsePrices($priceFileName, $cfg) {
             preg_match('/(over (\d+))/', $a, $matches);
             // правая граница
             if ($matches[2]) {
-//                    file_put_contents('log.log', var_export($matches, true) . "\n", FILE_APPEND);
-//                    file_put_contents('log.log', var_export($to, true) . "\n", FILE_APPEND);
                 $from = $matches[2] + 1;
             }
-
             // массив ширин
-            $widthes = range($from, $to + 1);
+//            $widthes = range($from, $to + 1);
+            $widthes = range($from, $to);
 
             // в правой перечень толщин
             // избавляемся от лишних символов
