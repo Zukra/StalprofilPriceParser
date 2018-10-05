@@ -10,6 +10,6 @@
     }
   ],
   "require": {
-    "phpoffice/phpexcel": "1.8.1"
+    "phpoffice/phpexcel": "1.8.x-dev"
   }
 }

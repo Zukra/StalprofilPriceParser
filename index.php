@@ -4,36 +4,6 @@ $errors = (isset($_SESSION) && isset($_SESSION['errors'])) ? $_SESSION['errors']
 $success = (isset($_SESSION) && isset($_SESSION['success'])) ? $_SESSION['success'] : array();
 unset($_SESSION['errors']);
 unset($_SESSION['success']);
-
-/*echo "<pre>";
-$str = 'z/g 20x20 to 100x100 x 2 - 4 ';
-$str = ' z/g 100x75x8';
-$str = strtoupper(str_replace([' ', 'z/g'], ['', ''], $str));
-preg_match('/(\S+)TO(\S+)X((\d+)-(\d+))/', $str, $matches);
-
-$sizes = [];
-if (!empty($matches)) {
-    $sizeFrom = explode('X', $matches[1]);
-    $sizeTo = explode('X', $matches[2]);
-    $thicknessFrom = (int)$matches[4];
-    $thicknessTo = (int)$matches[5];
-
-    $widths = range($sizeFrom[0], $sizeTo[0]);
-    $heights = range($sizeFrom[1], $sizeTo[1]);
-    $thicknesses = range($thicknessFrom, $thicknessTo);
-    foreach ($thicknesses as $thickness) {
-        foreach ($widths as $width) {
-            foreach ($heights as $height) {
-                $sizes[] = $width . 'X' . $height . 'X' . $thickness;
-            }
-        }
-    }
-
-} else {
-    $sizes[] = $str;
-}
-var_dump(count($sizes), $sizes);
-echo "</pre>";*/
 ?>
 <!doctype html>
 <html lang="en">

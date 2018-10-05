@@ -1,6 +1,6 @@
 <?php
 
-//require 'vendor/autoload.php';
+require 'vendor/autoload.php';
 
 //file_put_contents('log.log', var_export($matches, true) . "\n", FILE_APPEND);
 
@@ -1108,7 +1108,7 @@ function parseRow($rowData, $cfg) {
  */
 function parsePrices($priceFileName, $cfg) {
     // подключение утилиты для разбора XLS
-    require_once(dirname(__FILE__) . '/vendor/PHPExcel/IOFactory.php');
+    //require_once(dirname(__FILE__) . '/vendor/PHPExcel/IOFactory.php');
 
     // флаг для определения, нужно ли продолжать разбор
     $processing = true;
@@ -2054,7 +2054,7 @@ function parsePrices($priceFileName, $cfg) {
             $steel1 = trim($rowData[1]);
             // цена за сталь S235JR, S235JR/S275JR
             $steel2 = trim($rowData[2]);
-            // цена за сталь S355J2
+            // цена за сталь S355J2, S355K2
             $steel3 = trim($rowData[3]);
 
             // создаем специальный хеш для хранения цен
@@ -2064,6 +2064,7 @@ function parsePrices($priceFileName, $cfg) {
             $x["{$profile}xS275JR"] = $steel2;
             $x["{$profile}xS235JR/S275JR"] = $steel2;
             $x["{$profile}xS355J2"] = $steel3;
+            $x["{$profile}xS355K2"] = $steel3;
 
             if (!trim($rowData[0])) { // колонка исчерпана
                 break;
@@ -2084,7 +2085,7 @@ function parsePrices($priceFileName, $cfg) {
             $profile = str_replace('X', 'x', $profile);
             // цена за сталь S235JR, S235JR/S275JR, S275JR
             $steel1 = trim($rowData[5]);
-            // цена за сталь S355J2
+            // цена за сталь S355J2, S355K2
             $steel2 = trim($rowData[6]);
 
             // создаем специальный хеш для хранения цен
@@ -2092,6 +2093,7 @@ function parsePrices($priceFileName, $cfg) {
             $x["{$profile}xS275JR"] = $steel1;
             $x["{$profile}xS235JR/S275JR"] = $steel1;
             $x["{$profile}xS355J2"] = $steel2;
+            $x["{$profile}xS355K2"] = $steel2;
 
             if (!trim($rowData[4])) { // колонка исчерпана
                 break;
@@ -2117,7 +2119,7 @@ function parsePrices($priceFileName, $cfg) {
             }
             // цена за сталь S235JR, S235JR/S275JR, S275JR
             $steel1 = trim($rowData[8]);
-            // цена за сталь S355J2
+            // цена за сталь S355J2, S355K2
             $steel2 = trim($rowData[9]);
 
             // создаем специальный хеш для хранения цен
@@ -2126,6 +2128,7 @@ function parsePrices($priceFileName, $cfg) {
                 $x["{$p}xS275JR"] = $steel1;
                 $x["{$p}xS235JR/S275JR"] = $steel1;
                 $x["{$p}xS355J2"] = $steel2;
+                $x["{$p}xS355K2"] = $steel2;
             }
 
             if (!trim($rowData[7])) { // колонка исчерпана
@@ -2188,13 +2191,14 @@ function parsePrices($priceFileName, $cfg) {
             list($a, $b) = explode('to', $s);
             $diameters = range($a, $b + 0.1, 0.1);
 
-            // цена за сталь S235JR(H)
+            // цена за сталь S235JR(H), E235
             $steel = trim($rowData[2]);
 
             // создаем специальный хеш для хранения цен
             foreach ($diameters as $d) {
                 $x["{$d}xEN10219xS235JR"] = $steel;
                 $x["{$d}xEN10219xS235JRH"] = $steel;
+                $x["{$d}xEN10219xE235"] = $steel;
             }
         }
 
@@ -2270,7 +2274,7 @@ function parsePrices($priceFileName, $cfg) {
                 $thicknesses[$k] = (float)$t;
             }
 
-            // цена за сталь S235JR(H)
+            // цена за сталь S235JR(H), E235
             $steel1 = trim($rowData[2]);
             // цена за сталь S355J2(H)
             $steel2 = trim($rowData[3]);
@@ -2280,6 +2284,7 @@ function parsePrices($priceFileName, $cfg) {
                 foreach ($thicknesses as $t) {
                     $x["{$w}x{$t}xEN10219xS235JR"] = $steel1;
                     $x["{$w}x{$t}xEN10219xS235JRH"] = $steel1;
+                    $x["{$w}x{$t}xEN10219xE235"] = $steel1;
                     $x["{$w}x{$t}xEN10219xS355J2"] = $steel2;
                     $x["{$w}x{$t}xEN10219xS355J2H"] = $steel2;
                     $x["{$w}x{$t}xEN10219xS355J2H/S420MH"] = $steel2;
@@ -2796,7 +2801,7 @@ function parsePrices($priceFileName, $cfg) {
  */
 function parseData($stockFileName, $cfg) {
     // подключение утилиты для разбора XLS
-    require_once(dirname(__FILE__) . '/vendor/PHPExcel/IOFactory.php');
+    //require_once(dirname(__FILE__) . '/vendor/PHPExcel/IOFactory.php');
 
     // флаг для определения, нужно ли продолжать разбор
     $processing = true;
@@ -2878,7 +2883,7 @@ function parseData($stockFileName, $cfg) {
  */
 function saveDataToExcel($fileName, $data) {
     // подключение утилиты для записи в XLS
-    require_once(dirname(__FILE__) . '/vendor/PHPExcel/IOFactory.php');
+    //require_once(dirname(__FILE__) . '/vendor/PHPExcel/IOFactory.php');
     // создание экземпляра класса для работы с электронной таблицей
     $objPHPExcel = new PHPExcel();
 
