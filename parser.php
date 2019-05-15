@@ -24,101 +24,101 @@ global $prices;
  */
 $parserConfiguration = (object)array(
     'namesMap' => (object)array( // карта соответствий наименований
-                                 'BLACHA OCYNKOWANA'                 => (object)array(
-                                     'ru' => 'Лист оцинкованный',
-                                     'en' => 'HDG sheet',
-                                 ),
-                                 'BLACHA OCYNKOWANA W KRĘGACH'       => (object)array(
-                                     'ru' => 'Рулон оцинкованный',
-                                     'en' => 'HDG coil',
-                                 ),
-                                 'BLACHA G/W'                        => (object)array(
-                                     'ru' => 'Лист г/к',
-                                     'en' => 'Hot rolled steel plate',
-                                 ),
-                                 'BLACHA KOTŁOWA'                    => (object)array(
-                                     'ru' => 'Котельный лист',
-                                     'en' => 'Boiler plates',
-                                 ),
-                                 'BLACHA ŁEZKOWA'                    => (object)array(
-                                     'ru' => 'Рифленый лист',
-                                     'en' => 'Teardrop hot rolled steel sheet',
-                                 ),
-                                 'BLACHA Z/W'                        => (object)array(
-                                     'ru' => 'Лист х/к',
-                                     'en' => 'Cold rolled steel plate',
-                                 ),
-                                 'CEOWNIK EKON. O PÓŁKACH RÓWNOLEG.' => (object)array(
-                                     'ru' => 'Швеллер',
-                                     'en' => 'Economical chanel with parallel flanges',
-                                 ),
-                                 'CEOWNIK PÓŁZAMKNIĘTY'              => (object)array(
-                                     'ru' => 'Коробчатый профиль',
-                                     'en' => 'Semi-hollow channel section',
-                                 ),
-                                 'CEOWNIK Z/G'                       => (object)array(
-                                     'ru' => 'Швеллер гнутый',
-                                     'en' => 'Cold-formed channel',
-                                 ),
-                                 'CEOWNIK'                           => (object)array(
-                                     'ru' => 'Швеллер',
-                                     'en' => 'Channel',
-                                 ),
-                                 'DWUTEOWNIK'                        => (object)array(
-                                     'ru' => 'Балка',
-                                     'en' => 'Beam',
-                                 ),
-                                 'KĄTOWNIK Z/G'                      => (object)array(
-                                     'ru' => 'Уголок гнутый',
-                                     'en' => 'Cold-formed angle',
-                                 ),
-                                 'KĄTOWNIK'                          => (object)array(
-                                     'ru' => 'Уголок',
-                                     'en' => 'Angle',
-                                 ),
-                                 'KSZTAŁTOWNIK KWADRATOWY'           => (object)array(
-                                     'ru' => 'Профиль квадратный',
-                                     'en' => 'Square hollow section',
-                                 ),
-                                 'KSZTAŁTOWNIK PROSTOKĄTNY'          => (object)array(
-                                     'ru' => 'Профиль прямоугольный',
-                                     'en' => 'Rectangular hollow section',
-                                 ),
-                                 'PŁASKOWNIK'                        => (object)array(
-                                     'ru' => 'Полоса',
-                                     'en' => 'Flat bar',
-                                 ),
-                                 'PRĘT GŁADKI CIĄGNIONY'             => (object)array(
-                                     'ru' => 'Круг гладкий тянутый',
-                                     'en' => 'Round drawn bar',
-                                 ),
-                                 'PRĘT GŁADKI'                       => (object)array(
-                                     'ru' => 'Пруток круглый',
-                                     'en' => 'Round rolled bar',
-                                 ),
-                                 'PRĘT KWADRATOWY'                   => (object)array(
-                                     'ru' => 'Пруток квадратный',
-                                     'en' => 'Square bar',
-                                 ),
-                                 'PRĘT ŻEBROWANY'                    => (object)array(
-                                     'ru' => 'Стержень ребристый',
-                                     'en' => 'Ribbed bars',
-                                 ),
-                                 'RURA'                              => (object)array(
-                                     'ru' => 'Труба',
-                                     'en' => 'Pipe',
-                                 ),
-                                 'TEOWNIK'                           => (object)array(
-                                     'ru' => 'Тавр',
-                                     'en' => 'T-bar',
-                                 ),
-                                 'WALCÓWKA'                          => (object)array(
-                                     'ru' => 'Катанка',
-                                     'en' => 'Rod',
-                                 ),
+        'BLACHA OCYNKOWANA'                 => (object)array(
+            'ru' => 'Лист оцинкованный',
+            'en' => 'HDG sheet',
+        ),
+        'BLACHA OCYNKOWANA W KRĘGACH'       => (object)array(
+            'ru' => 'Рулон оцинкованный',
+            'en' => 'HDG coil',
+        ),
+        'BLACHA G/W'                        => (object)array(
+            'ru' => 'Лист г/к',
+            'en' => 'Hot rolled steel plate',
+        ),
+        'BLACHA KOTŁOWA'                    => (object)array(
+            'ru' => 'Котельный лист',
+            'en' => 'Boiler plates',
+        ),
+        'BLACHA ŁEZKOWA'                    => (object)array(
+            'ru' => 'Рифленый лист',
+            'en' => 'Teardrop hot rolled steel sheet',
+        ),
+        'BLACHA Z/W'                        => (object)array(
+            'ru' => 'Лист х/к',
+            'en' => 'Cold rolled steel plate',
+        ),
+        'CEOWNIK EKON. O PÓŁKACH RÓWNOLEG.' => (object)array(
+            'ru' => 'Швеллер',
+            'en' => 'Economical chanel with parallel flanges',
+        ),
+        'CEOWNIK PÓŁZAMKNIĘTY'              => (object)array(
+            'ru' => 'Коробчатый профиль',
+            'en' => 'Semi-hollow channel section',
+        ),
+        'CEOWNIK Z/G'                       => (object)array(
+            'ru' => 'Швеллер гнутый',
+            'en' => 'Cold-formed channel',
+        ),
+        'CEOWNIK'                           => (object)array(
+            'ru' => 'Швеллер',
+            'en' => 'Channel',
+        ),
+        'DWUTEOWNIK'                        => (object)array(
+            'ru' => 'Балка',
+            'en' => 'Beam',
+        ),
+        'KĄTOWNIK Z/G'                      => (object)array(
+            'ru' => 'Уголок гнутый',
+            'en' => 'Cold-formed angle',
+        ),
+        'KĄTOWNIK'                          => (object)array(
+            'ru' => 'Уголок',
+            'en' => 'Angle',
+        ),
+        'KSZTAŁTOWNIK KWADRATOWY'           => (object)array(
+            'ru' => 'Профиль квадратный',
+            'en' => 'Square hollow section',
+        ),
+        'KSZTAŁTOWNIK PROSTOKĄTNY'          => (object)array(
+            'ru' => 'Профиль прямоугольный',
+            'en' => 'Rectangular hollow section',
+        ),
+        'PŁASKOWNIK'                        => (object)array(
+            'ru' => 'Полоса',
+            'en' => 'Flat bar',
+        ),
+        'PRĘT GŁADKI CIĄGNIONY'             => (object)array(
+            'ru' => 'Круг гладкий тянутый',
+            'en' => 'Round drawn bar',
+        ),
+        'PRĘT GŁADKI'                       => (object)array(
+            'ru' => 'Пруток круглый',
+            'en' => 'Round rolled bar',
+        ),
+        'PRĘT KWADRATOWY'                   => (object)array(
+            'ru' => 'Пруток квадратный',
+            'en' => 'Square bar',
+        ),
+        'PRĘT ŻEBROWANY'                    => (object)array(
+            'ru' => 'Стержень ребристый',
+            'en' => 'Ribbed bars',
+        ),
+        'RURA'                              => (object)array(
+            'ru' => 'Труба',
+            'en' => 'Pipe',
+        ),
+        'TEOWNIK'                           => (object)array(
+            'ru' => 'Тавр',
+            'en' => 'T-bar',
+        ),
+        'WALCÓWKA'                          => (object)array(
+            'ru' => 'Катанка',
+            'en' => 'Rod',
+        ),
     ),
     'prices'   => (object)array( // настройки файла цен
-                                 'pricesStart' => 9, // стартовая строка цен листа "prices"
+        'pricesStart' => 9, // стартовая строка цен листа "prices"
     ),
     'titles'   => [
         'name'     => 0,
@@ -126,6 +126,8 @@ $parserConfiguration = (object)array(
         'unit'     => 2
     ],
 );
+
+processForm($parserConfiguration);
 
 /**
  * функция для получения наименования товара на конкретном языке
@@ -1101,12 +1103,14 @@ function parseRow($rowData, $cfg) {
  * принимает на вход путь к файлу цен и настройки разбора
  * разбирает файл и отдает в удобном виде для последующих манипуляций
  *
- * string    priceFileName    путь к файлу цен
- * object    cfg                    объект с настройками
+ * @param string    priceFileName    путь к файлу цен
+ * @param object    cfg                    объект с настройками
  *
  * return    array    разобранный массив цен
+ * @return array
  */
 function parsePrices($priceFileName, $cfg) {
+    $data = []; // здесь будут храниться разобранные данные цен
     // подключение утилиты для разбора XLS
     //require_once(dirname(__FILE__) . '/vendor/PHPExcel/IOFactory.php');
 
@@ -1123,9 +1127,6 @@ function parsePrices($priceFileName, $cfg) {
     }
 
     if ($processing) { // файл открылся на чтение, можно разбирать
-        // здесь будут храниться разобранные данные цен
-        $data = array();
-
         // ********************************************************************
         // start SHEETS & PLATES
         // ********************************************************************
@@ -1158,12 +1159,12 @@ function parsePrices($priceFileName, $cfg) {
                 continue;
             }
 
-            if ($startData && !trim($rowData[0])) { // цены по этой категории закончились
+            if ($startData && ! trim($rowData[0])) { // цены по этой категории закончились
                 break;
             }
 
             // если данные еще не начались либо попалась пустая строка или заголовок таблицы
-            if (!$startData || !trim($rowData[0]) || trim($rowData[0]) == 'THICKNESS  [mm]') {
+            if (! $startData || ! trim($rowData[0]) || trim($rowData[0]) == 'THICKNESS  [mm]') {
                 // переходим к следующей итерации
                 continue;
             }
@@ -1231,12 +1232,12 @@ function parsePrices($priceFileName, $cfg) {
                 continue;
             }
 
-            if ($startData && !trim($rowData[0])) { // цены по этой категории закончились
+            if ($startData && ! trim($rowData[0])) { // цены по этой категории закончились
                 break;
             }
 
             // если данные еще не начались либо попалась пустая строка или заголовок таблицы
-            if (!$startData || !trim($rowData[0]) || trim($rowData[0]) == 'THICKNESS  [mm]') {
+            if (! $startData || ! trim($rowData[0]) || trim($rowData[0]) == 'THICKNESS  [mm]') {
                 // переходим к следующей итерации
                 continue;
             }
@@ -1292,12 +1293,12 @@ function parsePrices($priceFileName, $cfg) {
                 continue;
             }
 
-            if ($startData && !trim($rowData[0])) { // цены по этой категории закончились
+            if ($startData && ! trim($rowData[0])) { // цены по этой категории закончились
                 break;
             }
 
             // если данные еще не начались либо попалась пустая строка или заголовок таблицы
-            if (!$startData || !trim($rowData[0]) || trim($rowData[0]) == 'THICKNESS  [mm]') {
+            if (! $startData || ! trim($rowData[0]) || trim($rowData[0]) == 'THICKNESS  [mm]') {
                 // переходим к следующей итерации
                 continue;
             }
@@ -1353,12 +1354,12 @@ function parsePrices($priceFileName, $cfg) {
                 continue;
             }
 
-            if ($startData && !trim($rowData[0])) { // цены по этой категории закончились
+            if ($startData && ! trim($rowData[0])) { // цены по этой категории закончились
                 break;
             }
 
             // если данные еще не начались либо попалась пустая строка или заголовок таблицы
-            if (!$startData || !trim($rowData[0]) || trim($rowData[0]) == 'THICKNESS  [mm]') {
+            if (! $startData || ! trim($rowData[0]) || trim($rowData[0]) == 'THICKNESS  [mm]') {
                 // переходим к следующей итерации
                 continue;
             }
@@ -1429,12 +1430,12 @@ function parsePrices($priceFileName, $cfg) {
                 continue;
             }
 
-            if ($startData && !trim($rowData[1])) { // цены по этой категории закончились
+            if ($startData && ! trim($rowData[1])) { // цены по этой категории закончились
                 break;
             }
 
             // если данные еще не начались либо попалась пустая строка
-            if (!$startData || !trim($rowData[1])) {
+            if (! $startData || ! trim($rowData[1])) {
                 // переходим к следующей итерации
                 continue;
             }
@@ -1513,12 +1514,12 @@ function parsePrices($priceFileName, $cfg) {
                 continue;
             }
 
-            if ($startData && !trim($rowData[1])) { // цены по этой категории закончились
+            if ($startData && ! trim($rowData[1])) { // цены по этой категории закончились
                 break;
             }
 
             // если данные еще не начались либо попалась пустая строка
-            if (!$startData || !trim($rowData[1])) {
+            if (! $startData || ! trim($rowData[1])) {
                 // переходим к следующей итерации
                 continue;
             }
@@ -1599,12 +1600,12 @@ function parsePrices($priceFileName, $cfg) {
                 continue;
             }
 
-            if ($startData && !trim($rowData[1])) { // цены по этой категории закончились
+            if ($startData && ! trim($rowData[1])) { // цены по этой категории закончились
                 break;
             }
 
             // если данные еще не начались либо попалась пустая строка
-            if (!$startData || !trim($rowData[1])) {
+            if (! $startData || ! trim($rowData[1])) {
                 // переходим к следующей итерации
                 continue;
             }
@@ -1682,12 +1683,12 @@ function parsePrices($priceFileName, $cfg) {
                 continue;
             }
 
-            if ($startData && !trim($rowData[1])) { // цены по этой категории закончились
+            if ($startData && ! trim($rowData[1])) { // цены по этой категории закончились
                 break;
             }
 
             // если данные еще не начались либо попалась пустая строка
-            if (!$startData || !trim($rowData[1])) {
+            if (! $startData || ! trim($rowData[1])) {
                 // переходим к следующей итерации
                 continue;
             }
@@ -1777,11 +1778,11 @@ function parsePrices($priceFileName, $cfg) {
                 // переходим к следующей итерации, где уже непосредственно будет работа с данными
                 continue;
             }
-            if ($startData && !trim($rowData[1])) { // цены по этой категории закончились
+            if ($startData && ! trim($rowData[1])) { // цены по этой категории закончились
                 break;
             }
             // если данные еще не начались либо попалась пустая строка
-            if (!$startData || !trim($rowData[1])) {
+            if (! $startData || ! trim($rowData[1])) {
                 // переходим к следующей итерации
                 continue;
             }
@@ -1853,11 +1854,11 @@ function parsePrices($priceFileName, $cfg) {
                 // переходим к следующей итерации, где уже непосредственно будет работа с данными
                 continue;
             }
-            if ($startData && !trim($rowData[1])) { // цены по этой категории закончились
+            if ($startData && ! trim($rowData[1])) { // цены по этой категории закончились
                 break;
             }
             // если данные еще не начались либо попалась пустая строка
-            if (!$startData || !trim($rowData[1])) {
+            if (! $startData || ! trim($rowData[1])) {
                 // переходим к следующей итерации
                 continue;
             }
@@ -1905,12 +1906,12 @@ function parsePrices($priceFileName, $cfg) {
                 continue;
             }
 
-            if ($startData && !trim($rowData[1])) { // цены по этой категории закончились
+            if ($startData && ! trim($rowData[1])) { // цены по этой категории закончились
                 break;
             }
 
             // если данные еще не начались либо попалась пустая строка
-            if (!$startData || !trim($rowData[1])) {
+            if (! $startData || ! trim($rowData[1])) {
                 // переходим к следующей итерации
                 continue;
             }
@@ -1920,7 +1921,7 @@ function parsePrices($priceFileName, $cfg) {
             $sizes = [];
             $str = strtoupper(str_replace([' ', 'z/g'], ['', ''], $rowData[1]));
             preg_match('/(\S+)TO(\S+)X((\d+)-(\d+))/', $str, $matches);
-            if (!empty($matches)) {
+            if (! empty($matches)) {
                 $sizeFrom = explode('X', $matches[1]);
                 $sizeTo = explode('X', $matches[2]);
                 $thicknessFrom = (int)$matches[4];
@@ -1973,12 +1974,12 @@ function parsePrices($priceFileName, $cfg) {
                 continue;
             }
 
-            if ($startData && !trim($rowData[1])) { // цены по этой категории закончились
+            if ($startData && ! trim($rowData[1])) { // цены по этой категории закончились
                 break;
             }
 
             // если данные еще не начались либо попалась пустая строка
-            if (!$startData || !trim($rowData[1])) {
+            if (! $startData || ! trim($rowData[1])) {
                 // переходим к следующей итерации
                 continue;
             }
@@ -1988,7 +1989,7 @@ function parsePrices($priceFileName, $cfg) {
             $sizes = [];
             $str = strtoupper(str_replace([' ', 'z/g'], ['', ''], $rowData[1]));
             preg_match('/(\S+)TO(\S+)X((\d+)-(\d+))/', $str, $matches);
-            if (!empty($matches)) {
+            if (! empty($matches)) {
                 $sizeFrom = explode('X', $matches[1]);
                 $sizeTo = explode('X', $matches[2]);
                 $thicknessFrom = (int)$matches[4];
@@ -2028,116 +2029,7 @@ function parsePrices($priceFileName, $cfg) {
         // ********************************************************************
         // start PRICES
         // ********************************************************************
-
-        // устанавливаем рабочий лист
-        $sheet = $objPHPExcel->getSheetByName('prices');
-        // определяем самую нижнюю заполненную строку
-        $highestRow = $sheet->getHighestRow();
-        // определяем самую крайнюю заполненную колонку
-        $highestColumn = $sheet->getHighestColumn();
-        // берем из настроек стартовую строку
-        $startRow = $cfg->prices->pricesStart;
-
-        $x = array();
-
-        // первый проход листа для первой колонки прайсов
-
-        for ($row = $startRow; $row <= $highestRow; $row++) {
-            // получаем массив данных строки
-            $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, null, true, false);
-            $rowData = $rowData[0];
-
-            // профиль
-            $profile = trim(strtoupper($rowData[0]));
-            $profile = str_replace('X', 'x', $profile);
-            // цена за сталь S235JR (длина 12000)
-            $steel1 = trim($rowData[1]);
-            // цена за сталь S235JR, S235JR/S275JR
-            $steel2 = trim($rowData[2]);
-            // цена за сталь S355J2, S355K2
-            $steel3 = trim($rowData[3]);
-
-            // создаем специальный хеш для хранения цен
-            $x["{$profile}xS235JRx12100"] = $steel1;
-            $x["{$profile}xS235JR/S275JRx12100"] = $steel1;
-            $x["{$profile}xS235JR"] = $steel2;
-            $x["{$profile}xS275JR"] = $steel2;
-            $x["{$profile}xS235JR/S275JR"] = $steel2;
-            $x["{$profile}xS355J2"] = $steel3;
-            $x["{$profile}xS355K2"] = $steel3;
-
-            if (!trim($rowData[0])) { // колонка исчерпана
-                break;
-            }
-        }
-
-        // второй проход листа для второй колонки прайсов
-
-        for ($row = $startRow; $row <= $highestRow; $row++) {
-            // получаем массив данных строки
-            $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, null, true, false);
-            $rowData = $rowData[0];
-
-            // профиль
-            $profile = trim(strtoupper($rowData[4]));
-            // INP = IPN
-            $profile = str_replace('INP', 'IPN', $profile);
-            $profile = str_replace('X', 'x', $profile);
-            // цена за сталь S235JR, S235JR/S275JR, S275JR
-            $steel1 = trim($rowData[5]);
-            // цена за сталь S355J2, S355K2
-            $steel2 = trim($rowData[6]);
-
-            // создаем специальный хеш для хранения цен
-            $x["{$profile}xS235JR"] = $steel1;
-            $x["{$profile}xS275JR"] = $steel1;
-            $x["{$profile}xS235JR/S275JR"] = $steel1;
-            $x["{$profile}xS355J2"] = $steel2;
-            $x["{$profile}xS355K2"] = $steel2;
-
-            if (!trim($rowData[4])) { // колонка исчерпана
-                break;
-            }
-        }
-
-        // третий проход листа для третьей колонки прайсов
-        for ($row = $startRow; $row <= $highestRow; $row++) {
-            // получаем массив данных строки
-            $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, null, true, false);
-            $rowData = $rowData[0];
-
-            // профиль
-            $profile = trim(strtoupper($rowData[7]));
-            $profile = str_replace('X', 'x', $profile);
-            if (strpos($profile, 'HEA,B') !== false) { // два профиля по одной цене
-                $profile = array(
-                    str_replace('HEA,B', 'HEA', $profile),
-                    str_replace('HEA,B', 'HEB', $profile),
-                );
-            } else { // один профиль
-                $profile = array($profile);
-            }
-            // цена за сталь S235JR, S235JR/S275JR, S275JR
-            $steel1 = trim($rowData[8]);
-            // цена за сталь S355J2, S355K2
-            $steel2 = trim($rowData[9]);
-
-            // создаем специальный хеш для хранения цен
-            foreach ($profile as $p) {
-                $x["{$p}xS235JR"] = $steel1;
-                $x["{$p}xS275JR"] = $steel1;
-                $x["{$p}xS235JR/S275JR"] = $steel1;
-                $x["{$p}xS355J2"] = $steel2;
-                $x["{$p}xS355K2"] = $steel2;
-            }
-
-            if (!trim($rowData[7])) { // колонка исчерпана
-                break;
-            }
-        }
-
-        $data['PROFIL'] = $x;
-
+        $data['PROFIL'] = parsePriceSheet($objPHPExcel, $cfg);
         // ********************************************************************
         // end PRICES
         // ********************************************************************
@@ -2175,12 +2067,12 @@ function parsePrices($priceFileName, $cfg) {
                 continue;
             }
 
-            if ($startData && !trim($rowData[1])) { // цены по этой категории закончились
+            if ($startData && ! trim($rowData[1])) { // цены по этой категории закончились
                 break;
             }
 
             // если данные еще не начались либо попалась пустая строка
-            if (!$startData || !trim($rowData[1])) {
+            if (! $startData || ! trim($rowData[1])) {
                 // переходим к следующей итерации
                 continue;
             }
@@ -2226,12 +2118,12 @@ function parsePrices($priceFileName, $cfg) {
                 continue;
             }
 
-            if ($startData && !trim($rowData[1])) { // цены по этой категории закончились
+            if ($startData && ! trim($rowData[1])) { // цены по этой категории закончились
                 break;
             }
 
             // если данные еще не начались либо попалась пустая строка
-            if (!$startData || !trim($rowData[1])) {
+            if (! $startData || ! trim($rowData[1])) {
                 // переходим к следующей итерации
                 continue;
             }
@@ -2317,12 +2209,12 @@ function parsePrices($priceFileName, $cfg) {
                     continue;
                 }
 
-                if ($startData && !trim($rowData[1])) { // цены по этой категории закончились
+                if ($startData && ! trim($rowData[1])) { // цены по этой категории закончились
                     break;
                 }
 
                 // если данные еще не начались либо попалась пустая строка
-                if (!$startData || !trim($rowData[1]) || trim($rowData[1]) == 'Rectangular Hollow Sections') {
+                if (! $startData || ! trim($rowData[1]) || trim($rowData[1]) == 'Rectangular Hollow Sections') {
                     // переходим к следующей итерации
                     continue;
                 }
@@ -2373,12 +2265,12 @@ function parsePrices($priceFileName, $cfg) {
                 continue;
             }
 
-            if ($startData && !trim($rowData[1])) { // цены по этой категории закончились
+            if ($startData && ! trim($rowData[1])) { // цены по этой категории закончились
                 break;
             }
 
             // если данные еще не начались либо попалась пустая строка
-            if (!$startData || !trim($rowData[1])) {
+            if (! $startData || ! trim($rowData[1])) {
                 // переходим к следующей итерации
                 continue;
             }
@@ -2461,12 +2353,12 @@ function parsePrices($priceFileName, $cfg) {
                 continue;
             }
 
-            if ($startData && !trim($rowData[0])) { // цены по этой категории закончились
+            if ($startData && ! trim($rowData[0])) { // цены по этой категории закончились
                 break;
             }
 
             // если данные еще не начались либо попалась пустая строка
-            if (!$startData || !trim($rowData[0])) {
+            if (! $startData || ! trim($rowData[0])) {
                 // переходим к следующей итерации
                 continue;
             }
@@ -2523,12 +2415,12 @@ function parsePrices($priceFileName, $cfg) {
                 continue;
             }
 
-            if ($startData && !trim($rowData[0])) { // цены по этой категории закончились
+            if ($startData && ! trim($rowData[0])) { // цены по этой категории закончились
                 break;
             }
 
             // если данные еще не начались либо попалась пустая строка
-            if (!$startData || !trim($rowData[0])) {
+            if (! $startData || ! trim($rowData[0])) {
                 // переходим к следующей итерации
                 continue;
             }
@@ -2612,12 +2504,12 @@ function parsePrices($priceFileName, $cfg) {
                 continue;
             }
 
-            if ($startData && !trim($rowData[1])) { // цены по этой категории закончились
+            if ($startData && ! trim($rowData[1])) { // цены по этой категории закончились
                 break;
             }
 
             // если данные еще не начались либо попалась пустая строка
-            if (!$startData || !trim($rowData[1])) {
+            if (! $startData || ! trim($rowData[1])) {
                 // переходим к следующей итерации
                 continue;
             }
@@ -2685,12 +2577,12 @@ function parsePrices($priceFileName, $cfg) {
                 continue;
             }
 
-            if ($startData && !trim($rowData[0])) { // цены по этой категории закончились
+            if ($startData && ! trim($rowData[0])) { // цены по этой категории закончились
                 break;
             }
 
             // если данные еще не начались либо попалась пустая строка
-            if (!$startData || !trim($rowData[0])) {
+            if (! $startData || ! trim($rowData[0])) {
                 // переходим к следующей итерации
                 continue;
             }
@@ -2743,12 +2635,12 @@ function parsePrices($priceFileName, $cfg) {
                 continue;
             }
 
-            if ($startData && !trim($rowData[0])) { // цены по этой категории закончились
+            if ($startData && ! trim($rowData[0])) { // цены по этой категории закончились
                 break;
             }
 
             // если данные еще не начались либо попалась пустая строка
-            if (!$startData || !trim($rowData[0])) {
+            if (! $startData || ! trim($rowData[0])) {
                 // переходим к следующей итерации
                 continue;
             }
@@ -2783,9 +2675,9 @@ function parsePrices($priceFileName, $cfg) {
         // ***************
         // end RIBBED BARS & WIRE ROD
         // ***************
-
-        return $data;
     }
+
+    return $data;
 }
 
 /**
@@ -2856,7 +2748,7 @@ function parseData($stockFileName, $cfg) {
                 }
 
                 // если данные еще не начались либо попалась пустая строка
-                if (!$startData || !trim($rowData[0])) {
+                if (! $startData || ! trim($rowData[0])) {
                     // переходим к следующей итерации
                     continue;
                 }
@@ -3226,7 +3118,7 @@ function parseResult($data) {
  * return    false
  */
 function processFile($key) {
-    if (!isset($_FILES[$key]) || empty($_FILES[$key]) || $_FILES[$key]['error']) {
+    if (! isset($_FILES[$key]) || empty($_FILES[$key]) || $_FILES[$key]['error']) {
         return false;
     }
 
@@ -3270,4 +3162,119 @@ function processForm($parserConfiguration) {
     header('Location: index.php');
 }
 
-processForm($parserConfiguration);
+/**
+ * PRICES sheet
+ * @param $objPHPExcel
+ * @param $cfg
+ * @return array
+ */
+function parsePriceSheet(PHPExcel $objPHPExcel, $cfg) {
+    $x = [];
+    // устанавливаем рабочий лист
+    $sheet = $objPHPExcel->getSheetByName('prices');
+    // определяем самую нижнюю заполненную строку
+    $highestRow = $sheet->getHighestRow();
+    // определяем самую крайнюю заполненную колонку
+    $highestColumn = $sheet->getHighestColumn();
+    // берем из настроек стартовую строку
+    $startRow = $cfg->prices->pricesStart;
+
+    // первый проход листа для первой колонки прайсов
+    for ($row = $startRow; $row <= $highestRow; $row++) {
+        // получаем массив данных строки
+        $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, null, true, false);
+        $rowData = $rowData[0];
+
+        // профиль
+        $profile = trim(strtoupper($rowData[0]));
+        $profile = str_replace('X', 'x', $profile);
+        // цена за сталь S235JR (длина 12000)
+        $steel1 = trim($rowData[1]);
+        // цена за сталь S355J2 (длина 12000)
+        $steel2 = trim($rowData[2]);
+        // цена за сталь S235JR, S235JR/S275JR
+        $steel3 = trim($rowData[3]);
+        // цена за сталь S355J2, S355K2
+        $steel4 = trim($rowData[4]);
+
+        // создаем специальный хеш для хранения цен
+        $x["{$profile}xS235JRx12100"] = $steel1;
+        $x["{$profile}xS235JR/S275JRx12100"] = $steel1;
+        $x["{$profile}xS355J2x12100"] = $steel2;
+        $x["{$profile}xS235JR"] = $steel3;
+        $x["{$profile}xS275JR"] = $steel3;
+        $x["{$profile}xS235JR/S275JR"] = $steel3;
+        $x["{$profile}xS355J2"] = $steel4;
+        $x["{$profile}xS355K2"] = $steel4;
+
+        if (! trim($rowData[0])) { // колонка исчерпана
+            break;
+        }
+    }
+
+    // второй проход листа для второй колонки прайсов
+    for ($row = $startRow; $row <= $highestRow; $row++) {
+        // получаем массив данных строки
+        $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, null, true, false);
+        $rowData = $rowData[0];
+
+        // профиль
+        $profile = trim(strtoupper($rowData[5]));
+        // INP = IPN
+        $profile = str_replace('INP', 'IPN', $profile);
+        $profile = str_replace('X', 'x', $profile);
+        // цена за сталь S235JR, S235JR/S275JR, S275JR
+        $steel1 = trim($rowData[6]);
+        // цена за сталь S355J2, S355K2
+        $steel2 = trim($rowData[7]);
+
+        // создаем специальный хеш для хранения цен
+        $x["{$profile}xS235JR"] = $steel1;
+        $x["{$profile}xS275JR"] = $steel1;
+        $x["{$profile}xS235JR/S275JR"] = $steel1;
+        $x["{$profile}xS355J2"] = $steel2;
+        $x["{$profile}xS355K2"] = $steel2;
+
+        if (! trim($rowData[5])) { // колонка исчерпана
+            break;
+        }
+    }
+
+    // третий проход листа для третьей колонки прайсов
+    for ($row = $startRow; $row <= $highestRow; $row++) {
+        // получаем массив данных строки
+        $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, null, true, false);
+        $rowData = $rowData[0];
+
+        // профиль
+        $profile = trim(strtoupper($rowData[8]));
+        $profile = str_replace('X', 'x', $profile);
+        if (strpos($profile, 'HEA,B') !== false) { // два профиля по одной цене
+            $profile = array(
+                str_replace('HEA,B', 'HEA', $profile),
+                str_replace('HEA,B', 'HEB', $profile),
+            );
+        } else { // один профиль
+            $profile = array($profile);
+        }
+        // цена за сталь S235JR, S235JR/S275JR, S275JR
+        $steel1 = trim($rowData[9]);
+        // цена за сталь S355J2, S355K2
+        $steel2 = trim($rowData[10]);
+
+        // создаем специальный хеш для хранения цен
+        foreach ($profile as $p) {
+            $x["{$p}xS235JR"] = $steel1;
+            $x["{$p}xS275JR"] = $steel1;
+            $x["{$p}xS235JR/S275JR"] = $steel1;
+            $x["{$p}xS355J2"] = $steel2;
+            $x["{$p}xS355K2"] = $steel2;
+        }
+
+        if (! trim($rowData[8])) { // колонка исчерпана
+            break;
+        }
+    }
+
+    return $x;
+}

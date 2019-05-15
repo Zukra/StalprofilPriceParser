@@ -11,5 +11,8 @@
   ],
   "require": {
     "phpoffice/phpexcel": "1.8.x-dev"
+  },
+  "require-dev": {
+    "symfony/var-dumper": "^4.4@dev"
   }
 }
