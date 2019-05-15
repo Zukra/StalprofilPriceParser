@@ -162,6 +162,7 @@ function getName($namePL, $lang, $map) {
  * return    void
  */
 function parseAdditional($str, &$item) {
+    $comment = '';
     // убираем лишние пробелы
     $str = trim($str);
 
@@ -735,8 +736,12 @@ function parseRow($rowData, $cfg) {
         if ($item->steel == 'S235JR' || $item->steel == 'S235JRC'
             || $item->steel == 'S355J2' || $item->steel == 'S355J2C'
             || $item->steel == 'S355MC') {
-            $item->name1C = str_replace('.', ',', "Лист {$item->thickness}х{$item->width}х{$item->length} EN 10025-2");
-            $item->nom = "EN 10025-2: листы стальные горячекатаные из нелегированной конструкционной стали";
+            $item->name1C = str_replace('.', ',', "Лист {$item->thickness}х{$item->width}х{$item->length}mm EN 10025-2");
+//            $item->nom = "EN 10025-2: листы стальные горячекатаные из нелегированной конструкционной стали";
+            $item->nom = "EN 10025-2: листы г/к из нелегированных конструкционных сталей";
+            if ($item->steel == 'S355MC') {
+                $item->nom = "EN 10149-2: листы г/к из катаной стали подвергнутой термомеханической обработке";
+            }
         }
         $item->price = getPrice('SHEETS', $item);
     } else if (strpos($rowData[0], 'BLACHA ŁEZKOWA') !== false) {
@@ -951,7 +956,9 @@ function parseRow($rowData, $cfg) {
         if ($item->steel == 'E235') {
             $item->name1C = str_replace('.', ',', "Труба прямоугольная сварная {$item->width}х{$item->height}х{$item->thickness} EN 10305-5");
             $item->nom = "EN 10305-5: трубы прямоугольные прецизионные сварные холоднокалиброванные";
-        } else if ($item->steel == 'S355J2H' || $item->steel == 'S235JRH' || $item->steel == 'S355J2H/S420MH') {
+        } else if ($item->steel == 'S355J2H'
+            || $item->steel == 'S235JRH' || $item->steel == 'S355J2H/S420MH'
+            || $item->steel == 'S235JR' || $item->steel == 'S275J2H') {
             if ($item->type) {
                 $item->name1C = str_replace('.', ',', "Труба прямоугольная бесшовная {$item->width}х{$item->height}х{$item->thickness} EN 10210");
                 $item->nom = "EN 10210: трубы прямоугольные бесшовные горячекатаные";
@@ -1033,6 +1040,9 @@ function parseRow($rowData, $cfg) {
         if ($item->steel == 'C45') {
             $item->name1C = str_replace('.', ',', "Квадрат стальной {$item->height}мм EN 10277-2");
             $item->nom = "EN 10277-2: квадраты стальные для общего машиностроения, сталь повышенной отделки поверхности";
+        } elseif (in_array($item->steel, ['S355J2', 'S275JR'])) {
+            $item->name1C = str_replace('.', ',', "Квадрат стальной {$item->height}мм EN 10025-2");
+            $item->nom = "EN 10025-2: квадраты стальные горячекатаные из нелегированной конструкционной стали";
         }
         $item->price = getPrice('SQUARE BARS', $item);
     } else if (strpos($rowData[0], 'PRĘT ŻEBROWANY') !== false) {
@@ -1079,9 +1089,11 @@ function parseRow($rowData, $cfg) {
         $item->namePL = 'WALCÓWKA';
         $item->nameRU = getName('WALCÓWKA', 'ru', $cfg->namesMap);
         $item->nameEN = getName('WALCÓWKA', 'en', $cfg->namesMap);
-        preg_match('/(WALCÓWKA) (fi )?(\S+) (.*)/', $x, $matches);
+//        preg_match('/(WALCÓWKA) (fi )?(\S+) (.*)/', $x, $matches);
+        preg_match('/(WALCÓWKA) (fi )?(\S+)\s+([^\s]+)(.*)/', $x, $matches);
         $item->diameter = (float)str_replace(',', '.', $matches[3]);
         parseAdditional($matches[4], $item);
+        $item->comment = $matches[5] ?? '';
         $item->price = getPrice('WIRE ROD', $item);
     } else {
         // неопределенный товар, не подошел ни один шаблон разбора
