@@ -864,7 +864,8 @@ function parseRow($rowData, $cfg) {
             $item->thickness = (float)str_replace(',', '.', $item->thickness);
         }
         parseAdditional($matches[5], $item);
-        $item->name1C = str_replace('.', ',', "Швеллер {$item->type} {$item->size}");
+        $tmpSize = str_replace('X', 'х', $item->size);
+        $item->name1C = str_replace('.', ',', "Швеллер {$item->type} {$tmpSize}");
         if ($item->type == 'UPN') {
             if (strpos($item->size, 'X') !== false) {
                 $item->name1C .= ' (U)';
@@ -1135,7 +1136,7 @@ function parseRow($rowData, $cfg) {
         $item->length = parseLength($matches[4]);
         parseAdditional($matches[5], $item);
         $item->name1C = str_replace('.', ',', "Балка тавровая Т{$item->height}");
-        $item->nom = "Балка T";
+        $item->nom = "Балка Т";
         $item->price = getPrice($matches[2] ? 'LOW T-BARS' : 'T-BARS', $item);
     } elseif (strpos($rowData[0], 'WALCÓWKA') !== false) {
         $item->namePL = 'WALCÓWKA';
