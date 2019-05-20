@@ -743,7 +743,7 @@ function parseRow($rowData, $cfg) {
         if ($item->steel == 'S235JR' || $item->steel == 'S235JRC'
             || $item->steel == 'S355J2' || $item->steel == 'S355J2C'
             || $item->steel == 'S355MC' || $item->steel == 'S355JR') {
-            $item->name1C = str_replace('.', ',', "Лист {$item->thickness}х{$item->width}х{$item->length}mm EN 10025-2");
+            $item->name1C = str_replace('.', ',', "Лист {$item->thickness}х{$item->width}х{$item->length}мм EN 10025-2");
 //            $item->nom = "EN 10025-2: листы стальные горячекатаные из нелегированной конструкционной стали";
             $item->nom = "EN 10025-2: листы г/к из нелегированных конструкционных сталей";
             if ($item->steel == 'S355MC') {
@@ -811,7 +811,7 @@ function parseRow($rowData, $cfg) {
         parseAdditional($matches[5], $item);
 
         if ($item->steel == 'DC01') {
-            $item->name1C = str_replace('.', ',', "Лист {$item->thickness}х{$item->width}х{$item->length}mm EN 10130");
+            $item->name1C = str_replace('.', ',', "Лист {$item->thickness}х{$item->width}х{$item->length}мм EN 10130");
             $item->nom = "EN 10130: листы х/к из низкоуглеродистой стали для холодной штамповки";
         }
 
@@ -1145,8 +1145,9 @@ function parseRow($rowData, $cfg) {
         preg_match('/(WALCÓWKA) (fi )?(\S+)\s+([^\s]+)(.*)/', $x, $matches);
         $item->diameter = (float)str_replace(',', '.', $matches[3]);
         parseAdditional($matches[4], $item);
-        $item->comment = $matches[5] ?? '';
+//        $item->comment = $matches[5] ?? '';1
         $item->price = getPrice('WIRE ROD', $item);
+        $item->steel .= ! empty($matches[5]) ? (' ' . $matches[5]) : '';
     } else {
         // неопределенный товар, не подошел ни один шаблон разбора
         $item->namePL = '***UNKNOWN***';
