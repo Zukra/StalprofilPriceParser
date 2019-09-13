@@ -2467,9 +2467,10 @@ function saveDataToExcel($fileName, $data) {
         $objPHPExcel->getActiveSheet()->SetCellValue('O1', 'Обработка');
         $objPHPExcel->getActiveSheet()->SetCellValue('P1', 'Примечание');
         $objPHPExcel->getActiveSheet()->SetCellValue('Q1', 'Количество');
-        $objPHPExcel->getActiveSheet()->SetCellValue('R1', 'Цена');
-        $objPHPExcel->getActiveSheet()->SetCellValue('S1', 'Наименование в 1С');
-        $objPHPExcel->getActiveSheet()->SetCellValue('T1', 'Вид номенклатуры');
+        $objPHPExcel->getActiveSheet()->SetCellValue('R1', 'Ед.изм.');
+        $objPHPExcel->getActiveSheet()->SetCellValue('S1', 'Цена');
+        $objPHPExcel->getActiveSheet()->SetCellValue('T1', 'Наименование в 1С');
+        $objPHPExcel->getActiveSheet()->SetCellValue('U1', 'Вид номенклатуры');
 
         // обходим все товары и переносим их на лист
         $j = 2;
@@ -2491,9 +2492,10 @@ function saveDataToExcel($fileName, $data) {
             $objPHPExcel->getActiveSheet()->SetCellValue('O' . $j, (isset($p->processing) ? $p->processing : ''));
             $objPHPExcel->getActiveSheet()->SetCellValue('P' . $j, (isset($p->comment) ? $p->comment : ''));
             $objPHPExcel->getActiveSheet()->SetCellValue('Q' . $j, (isset($p->quantity) ? $p->quantity : ''));
-            $objPHPExcel->getActiveSheet()->SetCellValue('R' . $j, (isset($p->price) ? $p->price : ''));
-            $objPHPExcel->getActiveSheet()->SetCellValue('S' . $j, (isset($p->name1C) ? $p->name1C : ''));
-            $objPHPExcel->getActiveSheet()->SetCellValue('T' . $j, (isset($p->nom) ? $p->nom : ''));
+            $objPHPExcel->getActiveSheet()->SetCellValue('R' . $j, $p->unit??'');
+            $objPHPExcel->getActiveSheet()->SetCellValue('S' . $j, (isset($p->price) ? $p->price : ''));
+            $objPHPExcel->getActiveSheet()->SetCellValue('T' . $j, (isset($p->name1C) ? $p->name1C : ''));
+            $objPHPExcel->getActiveSheet()->SetCellValue('U' . $j, (isset($p->nom) ? $p->nom : ''));
 
             $j++;
         }
