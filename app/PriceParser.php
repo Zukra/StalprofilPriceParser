@@ -6,14 +6,16 @@ namespace App;
 
 use PHPExcel;
 
-class PriceParser {
+class PriceParser
+{
 
     /**
      * RIBBED BARS
      * @param PHPExcel $objPHPExcel
      * @return array
      */
-    public static function getRibberBars(PHPExcel $objPHPExcel) {
+    public static function getRibberBars(PHPExcel $objPHPExcel)
+    {
         // устанавливаем рабочий лист
         $sheet = $objPHPExcel->getSheetByName('RIBBED BARS & WIRE ROD');
         // определяем самую нижнюю заполненную строку
@@ -78,7 +80,8 @@ class PriceParser {
      * @param PHPExcel $objPHPExcel
      * @return array
      */
-    public static function getWireRod(PHPExcel $objPHPExcel) {
+    public static function getWireRod(PHPExcel $objPHPExcel)
+    {
         // устанавливаем рабочий лист
         $sheet = $objPHPExcel->getSheetByName('RIBBED BARS & WIRE ROD');
         // определяем самую нижнюю заполненную строку
@@ -143,7 +146,8 @@ class PriceParser {
      * @param PHPExcel $objPHPExcel
      * @return array
      */
-    public static function getSheets(PHPExcel $objPHPExcel) {
+    public static function getSheets(PHPExcel $objPHPExcel)
+    {
         // устанавливаем рабочий лист
         $sheet = $objPHPExcel->getSheetByName('SHEETS & PLATES');
         // определяем самую нижнюю заполненную строку
@@ -219,7 +223,8 @@ class PriceParser {
         return $x;
     }
 
-    public static function getColdRolledPlates(PHPExcel $objPHPExcel) {
+    public static function getColdRolledPlates(PHPExcel $objPHPExcel)
+    {
         // устанавливаем рабочий лист
         $sheet = $objPHPExcel->getSheetByName('SHEETS & PLATES');
         // определяем самую нижнюю заполненную строку
@@ -283,7 +288,8 @@ class PriceParser {
      * @param PHPExcel $objPHPExcel
      * @return array
      */
-    public static function getUnequalAngles(PHPExcel $objPHPExcel) {
+    public static function getUnequalAngles(PHPExcel $objPHPExcel)
+    {
         // устанавливаем рабочий лист
         $sheet = $objPHPExcel->getSheetByName('Merchant Bars');
         // определяем самую нижнюю заполненную строку
@@ -377,7 +383,8 @@ class PriceParser {
      * @param PHPExcel $objPHPExcel
      * @return array
      */
-    public static function getEqualLegAngles(PHPExcel $objPHPExcel) {
+    public static function getEqualLegAngles(PHPExcel $objPHPExcel)
+    {
         // устанавливаем рабочий лист
         $sheet = $objPHPExcel->getSheetByName('Merchant Bars');
         // определяем самую нижнюю заполненную строку
@@ -486,7 +493,8 @@ class PriceParser {
      * @param PHPExcel $objPHPExcel
      * @return array
      */
-    public static function getColdFormedHollowSections(PHPExcel $objPHPExcel) {
+    public static function getColdFormedHollowSections(PHPExcel $objPHPExcel)
+    {
         // устанавливаем рабочий лист
         $sheet = $objPHPExcel->getSheetByName('Hollow Sections ');
         // определяем самую нижнюю заполненную строку
@@ -519,6 +527,12 @@ class PriceParser {
             if (! $startData || ! trim($rowData[1])) {
                 // переходим к следующей итерации
                 continue;
+            }
+
+            // для формата вида: 20x20x3
+            preg_match('/(\d+)x(\d+)x(\d+)/', $rowData[1], $matches);
+            if (! empty($matches)) {
+                $rowData[1] = 'from ' . $matches[1] . ' to ' . $matches[2] . ': thickness ' . $matches[3] . ' mm';
             }
 
             // разбиваем строку на две части
@@ -579,12 +593,13 @@ class PriceParser {
             // создаем специальный хеш для хранения цен
             foreach ($widthes as $w) {
                 foreach ($thicknesses as $t) {
-                    $x["{$w}x{$t}xEN10219xS235JR"] = $steel1;
-                    $x["{$w}x{$t}xEN10219xS235JRH"] = $steel1;
-                    $x["{$w}x{$t}xEN10219xE235"] = $steel1;
-                    $x["{$w}x{$t}xEN10219xS355J2"] = $steel2;
-                    $x["{$w}x{$t}xEN10219xS355J2H"] = $steel2;
-                    $x["{$w}x{$t}xEN10219xS355J2H/S420MH"] = $steel2;
+                    // Не перезаписывать значение массива
+                    $x["{$w}x{$t}xEN10219xS235JR"] = $x["{$w}x{$t}xEN10219xS235JR"] ?? $steel1;
+                    $x["{$w}x{$t}xEN10219xS235JRH"] = $x["{$w}x{$t}xEN10219xS235JRH"] ?? $steel1;
+                    $x["{$w}x{$t}xEN10219xE235"] = $x["{$w}x{$t}xEN10219xE235"] ?? $steel1;
+                    $x["{$w}x{$t}xEN10219xS355J2"] = $x["{$w}x{$t}xEN10219xS355J2"] ?? $steel2;
+                    $x["{$w}x{$t}xEN10219xS355J2H"] = $x["{$w}x{$t}xEN10219xS355J2H"] ?? $steel2;
+                    $x["{$w}x{$t}xEN10219xS355J2H/S420MH"] = $x["{$w}x{$t}xEN10219xS355J2H/S420MH"] ?? $steel2;
                 }
             }
         }
