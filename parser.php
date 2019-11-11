@@ -400,6 +400,8 @@ function getPriceTBars($product) {
  * object    product        объект товара
  *
  * return    float            цена (0, если не найдена)
+ * @param $product
+ * @return int
  */
 function getPriceProfil($product) {
     global $prices;
@@ -1809,7 +1811,8 @@ function parsePrices($priceFileName, $cfg) {
         // ********************************************************************
         // start PRICES
         // ********************************************************************
-        $data['PROFIL'] = parsePriceSheet($objPHPExcel, $cfg);
+//        $data['PROFIL'] = parsePriceSheet($objPHPExcel, $cfg);
+        $data['PROFIL'] = \App\PriceParser::getPriceSheet($objPHPExcel, $cfg);
         // ********************************************************************
         // end PRICES
         // ********************************************************************
@@ -2820,121 +2823,4 @@ function processForm($parserConfiguration) {
     }
 
     header('Location: index.php');
-}
-
-/**
- * PRICES sheet
- * @param $objPHPExcel
- * @param $cfg
- * @return array
- */
-function parsePriceSheet(PHPExcel $objPHPExcel, $cfg) {
-    $x = [];
-    // устанавливаем рабочий лист
-    $sheet = $objPHPExcel->getSheetByName('prices');
-    // определяем самую нижнюю заполненную строку
-    $highestRow = $sheet->getHighestRow();
-    // определяем самую крайнюю заполненную колонку
-    $highestColumn = $sheet->getHighestColumn();
-    // берем из настроек стартовую строку
-    $startRow = $cfg->prices->pricesStart;
-
-    // первый проход листа для первой колонки прайсов
-    for ($row = $startRow; $row <= $highestRow; $row++) {
-        // получаем массив данных строки
-        $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, null, true, false);
-        $rowData = $rowData[0];
-
-        // профиль
-        $profile = trim(strtoupper($rowData[0]));
-        $profile = str_replace('X', 'x', $profile);
-        // цена за сталь S235JR (длина 12000)
-        $steel1 = trim($rowData[1]);
-        // цена за сталь S355J2 (длина 12000)
-        $steel2 = trim($rowData[2]);
-        // цена за сталь S235JR, S235JR/S275JR
-        $steel3 = trim($rowData[3]);
-        // цена за сталь S355J2, S355K2
-        $steel4 = trim($rowData[4]);
-
-        // создаем специальный хеш для хранения цен
-        $x["{$profile}xS235JRx12100"] = $steel1;
-        $x["{$profile}xS235JR/S275JRx12100"] = $steel1;
-        $x["{$profile}xS355J2x12100"] = $steel2;
-        $x["{$profile}xS235JR"] = $steel3;
-        $x["{$profile}xS275JR"] = $steel3;
-        $x["{$profile}xS235JR/S275JR"] = $steel3;
-        $x["{$profile}xS355J2"] = $steel4;
-        $x["{$profile}xS355K2"] = $steel4;
-
-        if (! trim($rowData[0])) { // колонка исчерпана
-            break;
-        }
-    }
-
-    // второй проход листа для второй колонки прайсов
-    for ($row = $startRow; $row <= $highestRow; $row++) {
-        // получаем массив данных строки
-        $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, null, true, false);
-        $rowData = $rowData[0];
-
-        // профиль
-        $profile = trim(strtoupper($rowData[5]));
-        // INP = IPN
-        $profile = str_replace('INP', 'IPN', $profile);
-        $profile = str_replace('X', 'x', $profile);
-        // цена за сталь S235JR, S235JR/S275JR, S275JR
-        $steel1 = trim($rowData[6]);
-        // цена за сталь S355J2, S355K2
-        $steel2 = trim($rowData[7]);
-
-        // создаем специальный хеш для хранения цен
-        $x["{$profile}xS235JR"] = $steel1;
-        $x["{$profile}xS275JR"] = $steel1;
-        $x["{$profile}xS235JR/S275JR"] = $steel1;
-        $x["{$profile}xS355J2"] = $steel2;
-        $x["{$profile}xS355K2"] = $steel2;
-
-        if (! trim($rowData[5])) { // колонка исчерпана
-            break;
-        }
-    }
-
-    // третий проход листа для третьей колонки прайсов
-    for ($row = $startRow; $row <= $highestRow; $row++) {
-        // получаем массив данных строки
-        $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, null, true, false);
-        $rowData = $rowData[0];
-
-        // профиль
-        $profile = trim(strtoupper($rowData[8]));
-        $profile = str_replace('X', 'x', $profile);
-        if (strpos($profile, 'HEA,B') !== false) { // два профиля по одной цене
-            $profile = [
-                str_replace('HEA,B', 'HEA', $profile),
-                str_replace('HEA,B', 'HEB', $profile),
-            ];
-        } else { // один профиль
-            $profile = [$profile];
-        }
-        // цена за сталь S235JR, S235JR/S275JR, S275JR
-        $steel1 = trim($rowData[9]);
-        // цена за сталь S355J2, S355K2
-        $steel2 = trim($rowData[10]);
-
-        // создаем специальный хеш для хранения цен
-        foreach ($profile as $p) {
-            $x["{$p}xS235JR"] = $steel1;
-            $x["{$p}xS275JR"] = $steel1;
-            $x["{$p}xS235JR/S275JR"] = $steel1;
-            $x["{$p}xS355J2"] = $steel2;
-            $x["{$p}xS355K2"] = $steel2;
-        }
-
-        if (! trim($rowData[8])) { // колонка исчерпана
-            break;
-        }
-    }
-
-    return $x;
 }
