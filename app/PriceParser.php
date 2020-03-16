@@ -11,7 +11,7 @@ class PriceParser
 
     /**
      * RIBBED BARS
-     * @param PHPExcel $objPHPExcel
+     * @param  PHPExcel  $objPHPExcel
      * @return array
      */
     public static function getRibberBars(PHPExcel $objPHPExcel)
@@ -77,7 +77,7 @@ class PriceParser
 
     /**
      * WIRE ROD
-     * @param PHPExcel $objPHPExcel
+     * @param  PHPExcel  $objPHPExcel
      * @return array
      */
     public static function getWireRod(PHPExcel $objPHPExcel)
@@ -143,7 +143,7 @@ class PriceParser
 
     /**
      * SHEETS
-     * @param PHPExcel $objPHPExcel
+     * @param  PHPExcel  $objPHPExcel
      * @return array
      */
     public static function getSheets(PHPExcel $objPHPExcel)
@@ -198,6 +198,7 @@ class PriceParser
                 $sizes = trim(preg_replace('!\s+!', ' ', $rowData[1]));
                 // убираем оплошности заполнявшего прайс
                 $sizes = str_replace('2500 5000', '2500x5000', $sizes);
+                $sizes = strtolower($sizes);
                 // режем строку в массив
                 $sizes = explode(' ', $sizes);
             }
@@ -285,7 +286,7 @@ class PriceParser
 
     /**
      * UNEQUAL ANGLES
-     * @param PHPExcel $objPHPExcel
+     * @param  PHPExcel  $objPHPExcel
      * @return array
      */
     public static function getUnequalAngles(PHPExcel $objPHPExcel)
@@ -380,7 +381,7 @@ class PriceParser
 
     /**
      * EQUAL-LEG ANGLES
-     * @param PHPExcel $objPHPExcel
+     * @param  PHPExcel  $objPHPExcel
      * @return array
      */
     public static function getEqualLegAngles(PHPExcel $objPHPExcel)
@@ -490,7 +491,7 @@ class PriceParser
 
     /**
      * Cold formed Hollow sections EN 10219
-     * @param PHPExcel $objPHPExcel
+     * @param  PHPExcel  $objPHPExcel
      * @return array
      */
     public static function getColdFormedHollowSections(PHPExcel $objPHPExcel)
@@ -609,8 +610,8 @@ class PriceParser
 
     /**
      * PRICES sheet
-     * @param PHPExcel $objPHPExcel
-     * @param          $cfg
+     * @param  PHPExcel  $objPHPExcel
+     * @param            $cfg
      * @return array
      */
     public static function getPriceSheet(PHPExcel $objPHPExcel, $cfg)
